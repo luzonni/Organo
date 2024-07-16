@@ -1,0 +1,21 @@
+.footer-site {
+    background: #6278F7;
+    color: #FFF;
+    padding: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-site ul li {
+    display: inline-block;
+    margin-left: 32px;
+}
+
+.footer-site ul li:last-child {
+    margin-right: 0;
+}
+
+.footer-site p {
+    font-size: 28px;
+}

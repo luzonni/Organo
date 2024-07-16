@@ -5,17 +5,8 @@ import TextField from "../TextField"
 import "./style.css"
 import { useState } from "react"
 
-const CardForm = () => {
-    const times = [
-        'Programação',
-        'Front-End',
-        'Data Science',
-        'Devops',
-        'UX-Design',
-        'Mobile',
-        'Inovação e Gestão'
-    ]
-
+const CardForm = (props) => {
+    
     const [name, setName] = useState('')
     const [office, setOffice] = useState('')
     const [img, setIMG] = useState('')
@@ -23,7 +14,11 @@ const CardForm = () => {
 
     const onSave = (event) => {
         event.preventDefault()
-        console.log("Form foi submetido", name, office, img, team)
+        props.onRegistered({name, office, img, team})
+        setName('')
+        setOffice('')
+        setIMG('')
+        setTeam('')
     }
 
     return (
@@ -53,7 +48,7 @@ const CardForm = () => {
                 <SuspendedList 
                     required={true} 
                     label="Times" 
-                    items={times}
+                    items={props.teams}
                     value={team}
                     onChange={value => setTeam(value)}
                 />
