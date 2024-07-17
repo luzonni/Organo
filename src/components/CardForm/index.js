@@ -2,6 +2,7 @@
 import SuspendedList from "../SuspendedList"
 import Buttom from "../Buttom"
 import TextField from "../TextField"
+import ColorField from "../ColorField"
 import "./style.css"
 import { useState } from "react"
 
@@ -12,7 +13,10 @@ const CardForm = (props) => {
     const [img, setIMG] = useState('')
     const [team, setTeam] = useState('')
 
-    const onSave = (event) => {
+    const [teamName, setTeamName] = useState('')
+    const [teamColor, setTeamColor] = useState('')
+
+    const onSaveCollaborator = (event) => {
         event.preventDefault()
         props.onRegistered({name, office, img, team})
         setName('')
@@ -21,9 +25,16 @@ const CardForm = (props) => {
         setTeam('')
     }
 
+    const onSaveTeam = (event) => {
+        event.preventDefault()
+        props.onNewTeam({name: teamName,color:teamColor})
+        setTeamName('')
+        setTeamColor('')
+    }
+
     return (
         <section className="card-form">
-            <form onSubmit={onSave} >
+            <form onSubmit={event => onSaveCollaborator(event)} >
                 <h2>Preencha os dados para criar o card do colaborador</h2>
                 <TextField 
                     required={true} 
@@ -53,6 +64,23 @@ const CardForm = (props) => {
                     onChange={value => setTeam(value)}
                 />
                 <Buttom>Criar Card</Buttom>
+            </form>
+            <form onSubmit={event => onSaveTeam(event)}>
+                <h2>Preencha os campos para criar um novo time</h2>
+                <TextField 
+                    required
+                    label="Nome" 
+                    placeholder="Digite o nome do time"
+                    value={teamName}
+                    onChange={value => setTeamName(value)}
+                />
+                <ColorField 
+                    required
+                    label="Cor" 
+                    value={teamColor}
+                    onChange={value => setTeamColor(value)}
+                />
+                <Buttom>Criar time</Buttom>
             </form>
         </section>
     )

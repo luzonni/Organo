@@ -3,7 +3,7 @@
     width: 280px;
 }
 
-.collaborator .header {
+.collaborator .header-card-colaborator {
     border-radius: 10px 10px 0px 0px;
 }
 .collaborator img {
@@ -13,7 +13,7 @@
     bottom: -50px;
 }
 
-.collaborator .footer {
+.collaborator .footer-card-collaborator {
     background: #FFFFFF;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.08);
     border-radius: 0px 0px 10px 10px;
@@ -21,7 +21,7 @@
     padding-bottom: 40px;
 }
 
-.collaborator .footer h4 {
+.collaborator .footer-card-collaborator h4 {
     color: #6278F7;
     font-size: 18px;
     line-height: 22px;
@@ -29,7 +29,7 @@
     margin-bottom: 8px;
 }
 
-.collaborator .footer h5 {
+.collaborator .footer-card-collaborator h5 {
     font-size: 18px;
     line-height: 22px;
     color: #212121;
@@ -38,7 +38,14 @@
 
 .delet {
     position: absolute;
-    right: -10px;
-    top: -10px;
+    right: 0px;
+    top: 0px;
     color: #fa655a;
+    background-color: rgb(134, 32, 32);
+    border-radius: 0 10px 0 10px;
+    padding: 3px;
+}
+
+.favorite {
+    font-weight: bold;
 }

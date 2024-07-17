@@ -3,64 +3,84 @@ import Footer from './components/Footer'
 import CardForm from './components/CardForm';
 import { useState } from 'react';
 import Team from './components/Team';
+import { v4 as uuidv4 } from 'uuid'
 
 function App() {
 
   const [teams, setTeams] = useState([
     {
+      id: uuidv4(),
       name: 'Programação',
-      primaryColor: '#57C278',
-      secundaryColor: '#D9F7E9',
+      color: '#D9F7E9',
     },
     {
+      id: uuidv4(),
       name: 'Front-End',
-      primaryColor: '#82CFFA',
-      secundaryColor: '#E8F8FF',
+      color: '#E8F8FF',
     },
     {
+      id: uuidv4(),
       name: 'Data Sciense',
-      primaryColor: '#A6D157',
-      secundaryColor: '#F0F8E2',
+      color: '#F0F8E2',
     },
     {
+      id: uuidv4(),
       name: 'Devops',
-      primaryColor: '#E06B69',
-      secundaryColor: '#FDE7E8',
+      color: '#FDE7E8',
     },
     {
+      id: uuidv4(),
       name: 'UX-Design',
-      primaryColor: '#D86EBF',
-      secundaryColor: '#FAE5F5',
+      color: '#FAE5F5',
     },
     {
+      id: uuidv4(),
       name: 'Mobile',
-      primaryColor: '#FEBA05',
-      secundaryColor: '#FFF5D9',
+      color: '#FFF5D9',
     },
     {
+      id: uuidv4(),
       name: 'Inovação & Gestão',
-      primaryColor: '#FF8A29',
-      secundaryColor: '#FFEEDF',
+      color: '#FFEEDF',
     }
   ])
 
   const [collaborators, setCollaborators] = useState([])
 
   const onNewCollaboratorAdded = (collaborator) => {
-    setCollaborators([...collaborators, collaborator])
+    setCollaborators([...collaborators, {...collaborator, id: uuidv4(), fav: false}])
   }
 
-  const changeTeamColor = (name, cor) => {
+  const onNewTeamAdded = (newTeam) => {
+    setTeams([...teams, {...newTeam, id: uuidv4()}])
+  }
+
+  const changeTeamColor = (id, color) => {
     setTeams(teams.map(team => {
-      if(team.name === name) {
-        team.primaryColor = cor
+      if(team.id === id) {
+        team.color = color
       }
       return team
     }))
   }
 
-  const deletCollaborator = () => {
-    console.log("Deletndo colaborador")
+  const deletCollaborator = (id) => {
+    setCollaborators(collaborators.filter( collaborator => {
+      if(collaborator.id !== id) {
+        return collaborator
+      }
+      return null
+    }))
+  }
+
+  const favoriter = (id) => {
+    console.log(id)
+    setCollaborators(collaborators.map(collaborator => {
+      if(collaborator.id === id) {
+        collaborator.fav = !collaborator.fav
+      }
+      return collaborator
+    }))
   }
 
   return (
@@ -69,18 +89,23 @@ function App() {
       <CardForm 
         teams={teams.map(team => team.name)} 
         onRegistered={collaborator => onNewCollaboratorAdded(collaborator)}
+        onNewTeam={team => onNewTeamAdded(team)}
       />
-      {teams.map((team, index) => {
-        return (
-          <Team 
-            key={index}
-            collaborators={collaborators.filter(collaborator => collaborator.team === team.name)} 
-            team={team}
-            onDelet={deletCollaborator}
-            changeColor={changeTeamColor}
-          />
-        )
-      })}
+      {(collaborators.length > 0) && <section className='teams-section'>
+        <h2>Minha Organização</h2>
+        {teams.map((team, index) => {
+          return (
+            <Team 
+              key={index}
+              collaborators={collaborators.filter(collaborator => collaborator.team === team.name)} 
+              team={team}
+              onDelet={deletCollaborator}
+              changeColor={changeTeamColor}
+              onFav={favoriter}
+            />
+          )
+        })}
+      </section>}
       <Footer/>
     </div>
   );
