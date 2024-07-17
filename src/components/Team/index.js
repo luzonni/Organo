@@ -1,24 +1,29 @@
 import CollaboratorCard from "../CollaboratorCard"
 import "./style.css"
 
-const Team = (props) => {
-
-    const secundary = {backgroundColor: props.secundaryColor}
-    const primary = {borderColor: props.primaryColor}
+const Team = ({collaborators, team, onDelet, changeColor}) => {
 
     return (
-        (props.collaborators.length > 0) && <section className="team" style={secundary} >
-            <h3 style={primary} >{props.name}</h3>
+        (collaborators.length > 0) && <section className="team" style={{backgroundColor: team.secundaryColor}} >
+            <input 
+                type="color" 
+                className="input-color" 
+                value={team.primaryColor}
+                onChange={event => {
+                    changeColor(team.name, event.target.value)
+                }}
+            />
+            <h3 style={{borderColor: team.primaryColor}} >{team.name}</h3>
             <div className="collaborators">
-                {props.collaborators.map( collaborator => {
+                {collaborators.map( (collaborator, index) => {
                     return (
                         <CollaboratorCard
-                            key={collaborator.name} 
+                            key={index} 
                             name={collaborator.name}
                             office={collaborator.office}
                             img={collaborator.img}
-                            team={collaborator.team}
-                            color={props.primaryColor}
+                            color={team.primaryColor}
+                            onDelet={onDelet}
                         />
                     )
                 } )} 

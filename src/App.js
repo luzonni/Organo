@@ -6,7 +6,7 @@ import Team from './components/Team';
 
 function App() {
 
-  const listTeams = [
+  const [teams, setTeams] = useState([
     {
       name: 'Programação',
       primaryColor: '#57C278',
@@ -42,7 +42,7 @@ function App() {
       primaryColor: '#FF8A29',
       secundaryColor: '#FFEEDF',
     }
-  ]
+  ])
 
   const [collaborators, setCollaborators] = useState([])
 
@@ -50,18 +50,35 @@ function App() {
     setCollaborators([...collaborators, collaborator])
   }
 
+  const changeTeamColor = (name, cor) => {
+    setTeams(teams.map(team => {
+      if(team.name === name) {
+        team.primaryColor = cor
+      }
+      return team
+    }))
+  }
+
+  const deletCollaborator = () => {
+    console.log("Deletndo colaborador")
+  }
+
   return (
     <div>
       <Banner/>
-      <CardForm teams={listTeams.map(team => team.name)} onRegistered={collaborator => onNewCollaboratorAdded(collaborator)}/>
-      {listTeams.map(team => {
+      <CardForm 
+        teams={teams.map(team => team.name)} 
+        onRegistered={collaborator => onNewCollaboratorAdded(collaborator)}
+      />
+      {teams.map((team, index) => {
         return (
           <Team 
-          key={team.name} 
-          name={team.name} 
-          primaryColor={team.primaryColor} 
-          secundaryColor={team.secundaryColor}
-          collaborators={collaborators.filter(collaborator => collaborator.team === team.name)} />
+            key={index}
+            collaborators={collaborators.filter(collaborator => collaborator.team === team.name)} 
+            team={team}
+            onDelet={deletCollaborator}
+            changeColor={changeTeamColor}
+          />
         )
       })}
       <Footer/>

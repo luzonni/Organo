@@ -1,4 +1,6 @@
 .team {
+    position: relative;
+    background-image: url('/public/imgs/fundo.png');
     text-align: center;
     padding: 32px;
 }
@@ -15,4 +17,10 @@
     justify-content: space-around;
     margin-top: 32px;
     flex-wrap: wrap;
+}
+
+.input-color {
+    position: absolute;
+    top: 20px;
+    right: 50px;
 }
