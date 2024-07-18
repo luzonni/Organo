@@ -12,9 +12,34 @@ code {
     monospace;
 }
 
-.teams-section h2 {
+.iconForm {
+  width: 100%;
+  display: inline-flex;
   text-align: center;
-  color: green;
+  align-items: center;
+  color: #6378f7;
+  gap: 30px;
+  padding: 10px 60px;
+  margin-bottom: 40px;
+  box-sizing: border-box;
+}
+
+.iconForm hr {
+  width: 100%;
+  border: 5px solid #6378f7;
+  border-radius: 10px;
+}
+
+.iconForm h2 {
   font-size: 32px;
-  border-bottom: 4px solid green;
+}
+
+.iconForm #ic {
+  width: auto;
+  font-size: 64px;
+  size: 64px;
+}
+
+.iconForm #ic :hover {
+  color: #3d4ca3;
 }

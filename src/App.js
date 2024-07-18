@@ -1,11 +1,14 @@
 import Banner from './components/Banner';
 import Footer from './components/Footer'
 import CardForm from './components/CardForm';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Team from './components/Team';
 import { v4 as uuidv4 } from 'uuid'
+import { MdRateReview } from "react-icons/md";
 
 function App() {
+
+  const [showing, setShowing] = useState(false)
 
   const [teams, setTeams] = useState([
     {
@@ -47,6 +50,14 @@ function App() {
 
   const [collaborators, setCollaborators] = useState([])
 
+  useEffect(() => {
+    fetch("http://localhost:8080/peoples")
+    .then(response => response.json())
+    .then(dados => {
+      setCollaborators(dados)
+    })
+  }, [])
+
   const onNewCollaboratorAdded = (collaborator) => {
     setCollaborators([...collaborators, {...collaborator, id: uuidv4(), fav: false}])
   }
@@ -83,29 +94,42 @@ function App() {
     }))
   }
 
+  const showForm = () => {
+    setShowing(!showing)
+  }
+
   return (
     <div>
       <Banner/>
-      <CardForm 
-        teams={teams.map(team => team.name)} 
-        onRegistered={collaborator => onNewCollaboratorAdded(collaborator)}
-        onNewTeam={team => onNewTeamAdded(team)}
-      />
-      {(collaborators.length > 0) && <section className='teams-section'>
-        <h2>Minha Organização</h2>
-        {teams.map((team, index) => {
-          return (
-            <Team 
-              key={index}
-              collaborators={collaborators.filter(collaborator => collaborator.team === team.name)} 
-              team={team}
-              onDelet={deletCollaborator}
-              changeColor={changeTeamColor}
-              onFav={favoriter}
-            />
-          )
-        })}
-      </section>}
+      {(showing) && 
+        <CardForm 
+          teams={teams.map(team => team.name)} 
+          onRegistered={collaborator => onNewCollaboratorAdded(collaborator)}
+          onNewTeam={team => onNewTeamAdded(team)}
+        />
+      }
+      {(collaborators.length > 0) && 
+        <section className='teams-section'>
+          <div className='iconForm'>
+            <hr/>
+            <h2>Formulario:</h2>
+            <MdRateReview id='ic' size={200} onClick={() => showForm()}/>
+            <hr/>
+          </div>
+          {teams.map((team, index) => {
+            return (
+              <Team 
+                key={index}
+                collaborators={collaborators.filter(collaborator => collaborator.team === team.name)} 
+                team={team}
+                onDelet={deletCollaborator}
+                changeColor={changeTeamColor}
+                onFav={favoriter}
+              />
+            )
+          })}
+        </section>
+      }
       <Footer/>
     </div>
   );

@@ -5,7 +5,7 @@ import "./style.css"
 const Team = ({collaborators, team, onDelet, changeColor, onFav}) => {
 
     return (
-        (collaborators.length > 0) && <section className="team" style={{backgroundColor: hexToRgba(team.color, 0.2)}} >
+        (collaborators.length > 0) && <section className="team" style={{backgroundColor: hexToRgba(team.color, 0.6)}} >
             <input 
                 type="color" 
                 className="input-color" 

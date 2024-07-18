@@ -4,7 +4,8 @@
     gap: 20px;
     flex-wrap: wrap;
     justify-content: center;
-    margin: 80px 50px;
+    margin: 0 50px;
+    margin-bottom: 40px;
 }
 
 .card-form form {
